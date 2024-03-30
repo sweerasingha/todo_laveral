@@ -6,7 +6,7 @@
             <div class="col-lg-12 text-center">
                 <h1 class="page-title">My Todo List</h1>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-12 mt-4">
                 <form action="{{ route('todo.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
@@ -20,6 +20,39 @@
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-lg-12">
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($tasks as $key => $task)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $task->title }}</td>
+                                    <td>
+                                        @if ($task->done)
+                                            <span class="badge bg-success">Completed</span>
+                                        @else
+                                            <span class="badge bg-danger">Incompleted</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('todo.edit', $task->id) }}" class="btn btn-primary">Edit</a>
+                                        <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger">Delete</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                </div>
             </div>
         </div>
     </div>
