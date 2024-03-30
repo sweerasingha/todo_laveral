@@ -27,4 +27,24 @@ class TodoController extends Controller
         // return redirect()->route('todo');
         return redirect()->back();
     }
+
+    public function edit($id)
+    {
+        $response['task'] = $this->task->find($id);
+        return view('pages.todo.edit')->with($response);
+    }
+
+    public function delete($id)
+    {
+        $this->task->find($id)->delete();
+        return redirect()->back();
+    }
+
+    public function done($id)
+    {
+        $task = $this->task->find($id);
+        $task->done = 1;
+        $task->save();
+        return redirect()->back();
+    }
 }

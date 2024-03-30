@@ -45,8 +45,9 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('todo.edit', $task->id) }}" class="btn btn-primary">Edit</a>
-                                        <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger">Delete</a>
+                                        <a href="{{ route('todo.edit', $task->id) }}" class="btn btn-primary"><i class="fa-solid fa-trash-can"></i></a>
+                                        <a href="{{ route('todo.delete', $task->id) }}" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                        <a href="{{ route('todo.done', $task->id) }}" class="btn btn-success"><i class="fa-solid fa-check"></i></a>
                                     </td>
                                 </tr>
                             @endforeach
