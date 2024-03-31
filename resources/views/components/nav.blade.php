@@ -1,36 +1,31 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="{{ route('home') }}">Navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="{{ route('todo') }}">Todo List</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
+<div x-data="{ open: false }" class="bg-green-900 text-white">
+  <nav class="flex items-center justify-between p-6">
+    <div class="flex items-center flex-shrink-0 mr-6">
+      <a href="{{ route('dashboard') }}" class="font-semibold text-xl tracking-tight">Home</a>
     </div>
-  </div>
-</nav>
+    <div class="block lg:hidden">
+      <button @click="open = !open" class="px-3 py-2 border rounded text-green-200 border-green-400 hover:text-white hover:border-white">
+        <svg x-show="!open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        <svg x-show="open" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <div class="w-full lg:flex lg:items-center lg:w-auto" :class="{'block': open, 'hidden': !open}">
+      <div class="text-sm lg:flex-grow">
+        <a href="/todo" class="block mt-4 lg:mt-0 lg:inline-block text-green-200 hover:text-white mr-4">Todo</a>
+        <a href="/banner" class="block mt-4 lg:mt-0 lg:inline-block text-green-200 hover:text-white mr-4">Banners</a>
+      </div>
+      <div>
+        @auth
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="inline-block mt-4 lg:mt-0 px-4 py-2 leading-none border rounded text-green-200 border-white hover:border-transparent hover:text-green-500 hover:bg-white">Log Out</button>
+        </form>
+        @endauth
+        @guest
+        <a href="{{ route('login') }}" class="inline-block mt-4 lg:mt-0 px-4 py-2 leading-none border rounded text-green-200 border-white hover:border-transparent hover:text-green-500 hover:bg-white">Log In</a>
+        <a href="{{ route('register') }}" class="inline-block mt-4 lg:mt-0 px-4 py-2 leading-none border rounded text-green-200 border-white hover:border-transparent hover:text-green-500 hover:bg-white">Register</a>
+        @endguest
+      </div>
+    </div>
+  </nav>
+</div>

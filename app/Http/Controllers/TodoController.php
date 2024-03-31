@@ -3,48 +3,47 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use domain\Facades\TodoFacade;
 use App\Models\Todo;
 
-class TodoController extends Controller
+class TodoController extends ParentController
 {
-    protected $task;
-
-    public function __construct()
-    {
-        $this->task = new Todo();
-    }
 
     public function index()
     {
-        $response['tasks'] = $this->task->all();
+        // $response['tasks'] = $this->task->all();
+        $response['tasks'] = TodoFacade::all();
         // dd($response);
         return view('pages.todo.index')->with($response);
     }
 
     public function store(Request $request)
     {
-        $this->task->create($request->all());
-        // return redirect()->route('todo');
+        TodoFacade::store($request->all());
         return redirect()->back();
     }
 
-    public function edit($id)
+    public function edit(Request $request)
     {
-        $response['task'] = $this->task->find($id);
+        $response['task'] = TodoFacade::get($request['task_id']);
         return view('pages.todo.edit')->with($response);
+    }
+
+    public function update(Request $request, $task_id)
+    {
+        TodoFacade::update($request->all(), $task_id);
+        return redirect()->back();
     }
 
     public function delete($id)
     {
-        $this->task->find($id)->delete();
+        TodoFacade::delete($id);
         return redirect()->back();
     }
 
     public function done($id)
     {
-        $task = $this->task->find($id);
-        $task->done = 1;
-        $task->save();
+        TodoFacade::done($id);
         return redirect()->back();
     }
 }
